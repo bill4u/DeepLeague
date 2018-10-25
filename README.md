@@ -49,9 +49,9 @@ $ pip install keras
 # get the supporting files for the neural net.
 $ brew install wget
 $ brew install ffmpeg --with--libvpx # this may take a while.
-$ wget http://pjreddie.com/media/files/yolo.weights
-$ wget https://archive.org/download/DeepLeagueWeights/trained_stage_3_best.h5
-$ wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolo.cfg
+$ wget https://s3-us-west-2.amazonaws.com/mood1995/deep_league/yolo.weights
+$ wget https://s3-us-west-2.amazonaws.com/mood1995/deep_league/trained_stage_3_best.h5
+$ wget https://s3-us-west-2.amazonaws.com/mood1995/deep_league/yolo.cfg
 $ pythonw yad2k.py yolo.cfg yolo.weights model_data/yolo.h5 # we need to use pythonw when calling DeepLeague!
 ```
 Running that last command is extremely important. It might produce some errors which you can hopefully Google and quickly solve. I've found it really is dependent on your system + hardware.
@@ -70,9 +70,9 @@ source activate DeepLeague
 cd DeepLeague/YAD2K
 
 # Download the weights file
-wget http://pjreddie.com/media/files/yolo.weights
-wget https://archive.org/download/DeepLeagueWeights/trained_stage_3_best.h5
-wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolo.cfg
+wget https://s3-us-west-2.amazonaws.com/mood1995/deep_league/yolo.weights
+wget https://s3-us-west-2.amazonaws.com/mood1995/deep_league/trained_stage_3_best.h5
+wget https://s3-us-west-2.amazonaws.com/mood1995/deep_league/yolo.cfg
 
 # run the command to configure the model
 python yad2k.py yolo.cfg yolo.weights model_data/yolo.h5
@@ -82,7 +82,7 @@ Running that last command is extremely important. It might produce some errors w
 
 
 ### How do I run DeepLeague?
-Honestly, this repo has so many tiny functions. But, let me explain the easiest way to get this going if all you want to do is analyze a VOD (which most of you want I presume). the ```test_deep_league.py``` is the key to running everything. Its a little command line tool I made that lets you input a VOD to analyze using three different ways: a YouTube link, path to local MP4, path to a directory of images. I like the YouTube link option best, but if you have trouble with it feel free to use the MP4 approach instead. All you need is a 1080P VOD of a League game. Its extremely important its 1080p or else my scripts will incorrectly crop the mini map. Also, DeepLeague is only trained on mini maps from 1080P video. Other sizes aren't tested.
+Honestly, this repo has so many tiny functions. But, let me explain the easiest way to get this going if all you want to do is analyze a VOD (which most of you want I presume). The ```test_deep_league.py``` is the key to running everything. It's a little command line tool I made that lets you input a VOD to analyze using three different sources: a YouTube link, path to local MP4, and path to a directory of images. I like the YouTube link option best, but if you have trouble with it feel free to use the MP4 approach instead. All you need is a 1080P VOD of a League game. It's extremely important it's 1080p or else my scripts will incorrectly crop the mini map. Also, DeepLeague is only trained on mini maps from 1080P video; other sizes aren't tested.
 
 Here's an example of me running the tool with a YouTube link. This method automatically downloads the YT video as well and cuts it up according to the the start and end time you gave it. It will automatically do all the renaming to process stuff.
 
@@ -110,10 +110,10 @@ pythonw test_deep_league.py -out output mp4 -mp4 /Volumes/DATA/data/data/C9_CLG_
 ```
 
 ### How do I get the dataset:
-Download it [here](https://archive.org/details/DeepLeague100K).
+Download it [here](https://archive.org/compress/DeepLeague100K).
 
 I've split the dataset into multiple .npz files so it isn't just one massive file. I mainly did this to make batch training easier. I've compressed it down to one big 30GB file you can ```wget``` at this [link](https://archive.org/compress/DeepLeague100K). I recommend ```wget``` because it can resume failed downloads. The worst feeling is when a big download is about to finish and your internet crashes causing you to lose the entire download.
 
 Also, I have already split the dataset into training, testing, and validation sets which splits the data into 80%, 17.5%, and 2.5% cuts respectively. These .npz files only have the cropped mini maps frames and the bounding box information associated with every frame.
 
-If you want help reading this npz file, check out ```def visualize_npz_data``` [here](https://github.com/farzaa/DeepLeague/blob/master/vis_data.py).
+If you want help reading this npz file, check out ```def visualize_npz_data``` [here](https://github.com/farzaa/DeepLeague/blob/master/Data%20Scripts/vis_data.py).
